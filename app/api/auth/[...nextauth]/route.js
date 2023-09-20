@@ -1,7 +1,7 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import NextAuth from "next-auth";
 
-export const authOptions = {
+const authOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
