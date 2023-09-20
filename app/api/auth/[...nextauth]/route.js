@@ -10,14 +10,17 @@ const authOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        const res = await fetch("http://localhost:8000/login", {
-          method: "POST",
-          body: JSON.stringify({
-            loginId: credentials.username,
-            password: credentials.password,
-          }),
-          headers: { "Content-Type": "application/json" },
-        });
+        const res = await fetch(
+          "https://e-learning-back-jmydev.onrender.com/login",
+          {
+            method: "POST",
+            body: JSON.stringify({
+              loginId: credentials.username,
+              password: credentials.password,
+            }),
+            headers: { "Content-Type": "application/json" },
+          }
+        );
         const data = await res.json();
         console.log(data.user);
         // If no error and we have user data, return it
@@ -36,7 +39,7 @@ const authOptions = {
         token.user.level = session?.name;
 
         const res = await fetch(
-          `http://localhost:8000/api/user/${token.user._id}`,
+          `https://e-learning-back-jmydev.onrender.com/api/user/${token.user._id}`,
           {
             method: "PUT",
             headers: {
