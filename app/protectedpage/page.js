@@ -3,7 +3,10 @@ import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 
 function ProtectedPage() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  if (status === "loading") {
+    return <div>loding ...</div>;
+  }
   if (!session) {
     return redirect("/login?callbackUrl=/protectedpage");
   }
