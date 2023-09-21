@@ -1,13 +1,16 @@
 "use client";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
+import { redirect } from "next/navigation";
 
 function dashboard() {
   const [NewName, setNewName] = useState("");
   const { data: session, update } = useSession();
-  console.log(session);
+
   if (session?.user.user.isAdmin !== true) {
-    return <div>You must be logged in to access this page.</div>;
+    return redirect("/login?callbackUrl=/dashboard");
+
+    // return <div>You must be logged in to access this page.</div>;
   }
 
   return (

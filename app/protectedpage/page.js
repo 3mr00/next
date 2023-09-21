@@ -1,11 +1,11 @@
 "use client";
 import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 function ProtectedPage() {
   const { data: session } = useSession();
-  console.log(session);
   if (!session) {
-    return <div>You must be logged in to access this page.</div>;
+    return redirect("/login?callbackUrl=/protectedpage");
   }
 
   return (

@@ -1,7 +1,6 @@
 "use client";
-import { useSession } from "next-auth/react";
-import Link from "next/link";
 import React from "react";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 const SignInButton = () => {
   const { data: session } = useSession();
@@ -11,29 +10,32 @@ const SignInButton = () => {
     return (
       <div className="flex gap-4 ml-auto">
         <p className="text-sky-600">{session.user.user.level}</p>
-        <Link
-          href={"/api/auth/signout"}
+        <span
+          // href={"/api/auth/signout"}
+          onClick={() => signOut()}
           className="flex gap-4 ml-auto text-red-600"
         >
           Sign Out
-        </Link>
+        </span>
       </div>
     );
 
   return (
     <div className="flex gap-4 ml-auto items-center">
-      <Link
-        href={"/api/auth/signin"}
+      <span
+        // href={"/login"}
+        onClick={() => signIn()}
         className="flex gap-4 ml-auto text-green-600"
       >
         Sign In
-      </Link>
-      <Link
-        href={"/signup"}
+      </span>
+      {/* <span
+        // href={"/signup"}
+        onClick={() => signIn()}
         className="flex gap-4 ml-auto bg-green-600 text-green-200 p-2 rounded"
       >
         Sign Up
-      </Link>
+      </span> */}
     </div>
   );
 };
