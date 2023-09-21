@@ -1,15 +1,34 @@
-"use client";
-import { useSession } from "next-auth/react";
-import { useState } from "react";
 import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/route";
+import UpdateUser from "@/components/UpdateUser";
 
-function dashboard() {
-  const [NewName, setNewName] = useState("");
-  const { data: session, update, status } = useSession();
-  console.log(status);
-  if (status === "loading") {
-    return <div>loding ...</div>;
-  }
+async function getData() {
+  const session = await getServerSession(authOptions);
+
+  const res = await fetch(
+    "https://e-learning-back-jmydev.onrender.com/api/user/doctors",
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + session?.user.token,
+      },
+      cache: "no-cache",
+    }
+  );
+  return res.json();
+}
+
+const dashboard = async () => {
+  const data = await getData();
+  const session = await getServerSession(authOptions);
+
+  console.log("uuuuuuuuuuuuserrrrrrr:", data);
+  // console.log(loading);
+  // if (!session && loading === false) {
+  //   return <div>loding ...</div>
+  // }
   if (session?.user.user.isAdmin !== true) {
     return redirect(
       "/login?callbackUrl=/dashboard?&message=You Are Not Authorized!"
@@ -20,16 +39,19 @@ function dashboard() {
 
   return (
     <div>
-      <h1>Welcome, {session.user.user.level}!</h1>
-      <input
-        type="text"
-        value={NewName}
-        onChange={(e) => setNewName(e.target.value)}
-      />
-      <button onClick={() => update({ name: NewName })}>ارزع</button>
-      {/* Other content */}
+      <UpdateUser />
+
+      <div>
+        {data && (
+          <div>
+            {Object.keys(data.doctors).map((id, index) => (
+              <div key={index}>{data.doctors[id].name}</div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
-}
+};
 
 export default dashboard;
