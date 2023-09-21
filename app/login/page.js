@@ -4,10 +4,10 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 
-export default function LoginPage({ searchparams }) {
+export default function LoginPage() {
   const searchParams = useSearchParams();
   const message = searchParams.get("message");
-
+  console.log(message);
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",

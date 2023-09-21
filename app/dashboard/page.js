@@ -8,7 +8,9 @@ function dashboard() {
   const { data: session, update } = useSession();
 
   if (session?.user.user.isAdmin !== true) {
-    return redirect("/login?callbackUrl=/dashboard");
+    return redirect(
+      "/login?callbackUrl=/dashboard?&message=You Are Not Authorized!"
+    );
 
     // return <div>You must be logged in to access this page.</div>;
   }
