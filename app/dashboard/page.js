@@ -24,8 +24,6 @@ const dashboard = async () => {
   const data = await getData();
   const session = await getServerSession(authOptions);
 
-  console.log("uuuuuuuuuuuuserrrrrrr:", data);
-  // console.log(loading);
   // if (!session && loading === false) {
   //   return <div>loding ...</div>
   // }

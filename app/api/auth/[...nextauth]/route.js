@@ -22,7 +22,6 @@ export const authOptions = {
           }
         );
         const data = await res.json();
-        console.log(data.user);
         // If no error and we have user data, return it
         if (res.ok && data) {
           return data;
@@ -34,8 +33,7 @@ export const authOptions = {
   ],
   callbacks: {
     async jwt({ token, user, session, trigger }) {
-      console.log("jwt clalllllll ", { token, user, session });
-      if (trigger === "update") {
+      if (trigger && trigger === "update") {
         token.user.level = session?.name;
 
         const res = await fetch(
@@ -46,22 +44,19 @@ export const authOptions = {
               "Content-Type": "application/json",
               Authorization: "Bearer " + token.token,
             },
-            body: JSON.stringify({ level: session.name }),
+            body: JSON.stringify({ level: session?.name }),
           }
         );
-        console.log("resurrrrrrrrrrrrrrrrrrrrrrrpdate", res);
       }
       return { ...token, ...user };
     },
-    async session({ session, token, user }) {
-      console.log("session clalllllll ", { token, user, session });
-
+    async session({ session, token }) {
       session.user = token;
       return session;
     },
   },
   session: { strategy: "jwt" },
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: "lsdkmlskdmflksdkskmsdnkj",
   pages: {
     signIn: "/login",
   },

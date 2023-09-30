@@ -13,7 +13,7 @@ function ProtectedPage() {
 
   return (
     <div>
-      <h1>Welcome, {session.user.user.name}!</h1>
+      <h1>Welcome, {session?.user.user.name}!</h1>
       {/* Other content */}
     </div>
   );
