@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
-import UpdateUser from "@/components/UpdateUser";
+import UpdateUser from "../../components/UpdateUser";
 
 async function getData() {
   const session = await getServerSession(authOptions);
@@ -14,7 +14,7 @@ async function getData() {
         "Content-Type": "application/json",
         Authorization: "Bearer " + session?.user.token,
       },
-      cache: "no-cache",
+      cache: "no-store",
     }
   );
   return res.json();
